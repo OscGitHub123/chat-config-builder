@@ -27,6 +27,28 @@ const FileUpload = () => {
     setIsDragOver(false);
   }, []);
 
+  const saveFileToLocal = useCallback((file: File, content: string | ArrayBuffer) => {
+    // Save to localStorage for browser storage
+    const fileData = {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      content: content,
+      timestamp: Date.now()
+    };
+    
+    localStorage.setItem(`upload_${file.name}`, JSON.stringify(fileData));
+    
+    // Create download link to simulate saving to /upload folder
+    const blob = new Blob([content], { type: file.type });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `upload/${file.name}`;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }, []);
+
   const processFiles = useCallback((fileList: FileList) => {
     const allowedTypes = [
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -56,18 +78,29 @@ const FileUpload = () => {
 
       setFiles(prev => [...prev, newFile]);
 
-      // Simulate processing
-      setTimeout(() => {
-        setFiles(prev => prev.map(f => 
-          f.id === newFile.id ? { ...f, status: 'processed' } : f
-        ));
-        toast({
-          title: "File berhasil diproses",
-          description: `${file.name} siap digunakan untuk chat.`
-        });
-      }, 2000);
+      // Read and save file
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result;
+        if (content) {
+          saveFileToLocal(file, content);
+          setFiles(prev => prev.map(f => 
+            f.id === newFile.id ? { ...f, status: 'processed' } : f
+          ));
+          toast({
+            title: "File berhasil disimpan",
+            description: `${file.name} disimpan ke folder /upload dan browser storage.`
+          });
+        }
+      };
+      
+      if (file.type.includes('json')) {
+        reader.readAsText(file);
+      } else {
+        reader.readAsArrayBuffer(file);
+      }
     });
-  }, [toast]);
+  }, [toast, saveFileToLocal]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();

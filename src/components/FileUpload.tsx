@@ -137,7 +137,7 @@ const FileUpload = () => {
       <CardContent className="space-y-6">
         {/* Upload Area */}
         <div
-          className={`border-2 border-dashed rounded-lg p-8 text-center transition-smooth cursor-pointer ${
+          className={`border-2 border-dashed rounded-lg p-4 sm:p-6 md:p-8 text-center transition-smooth cursor-pointer ${
             isDragOver 
               ? 'border-primary bg-accent' 
               : 'border-border hover:border-primary hover:bg-accent/50'
@@ -147,11 +147,11 @@ const FileUpload = () => {
           onDrop={handleDrop}
           onClick={() => document.getElementById('fileInput')?.click()}
         >
-          <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-          <p className="text-lg font-semibold mb-2">
+          <Upload className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 mx-auto mb-3 sm:mb-4 text-muted-foreground" />
+          <p className="text-base sm:text-lg font-semibold mb-2 px-2">
             Drop files here atau klik untuk browse
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-muted-foreground px-2">
             Maksimal 10MB per file • Excel, JSON, Word
           </p>
           <input
@@ -169,15 +169,15 @@ const FileUpload = () => {
           <div className="space-y-2">
             <h4 className="font-semibold">File yang diupload:</h4>
             {files.map(file => (
-              <div key={file.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                <div className="flex items-center space-x-3">
-                  <File className="h-5 w-5 text-primary" />
-                  <div>
-                    <p className="font-medium">{file.name}</p>
-                    <p className="text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
+              <div key={file.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-muted rounded-lg gap-2 sm:gap-0">
+                <div className="flex items-center space-x-3 min-w-0 flex-1">
+                  <File className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-sm sm:text-base truncate">{file.name}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center justify-end space-x-2 sm:ml-4">
                   {file.status === 'uploading' && (
                     <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent" />
                   )}
@@ -188,7 +188,7 @@ const FileUpload = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => removeFile(file.id)}
-                    className="h-8 w-8 p-0"
+                    className="h-8 w-8 p-0 flex-shrink-0"
                   >
                     <X className="h-4 w-4" />
                   </Button>

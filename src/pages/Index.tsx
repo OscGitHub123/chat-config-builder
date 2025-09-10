@@ -14,7 +14,7 @@ const Index = () => {
         return <Hero />;
       case 'upload':
         return (
-          <div className="min-h-screen pt-20 pb-10 px-4">
+          <div className="min-h-screen pt-16 sm:pt-20 pb-6 sm:pb-10 px-3 sm:px-4">
             <div className="container mx-auto max-w-4xl">
               <FileUpload />
             </div>
@@ -22,7 +22,7 @@ const Index = () => {
         );
       case 'config':
         return (
-          <div className="min-h-screen pt-20 pb-10 px-4">
+          <div className="min-h-screen pt-16 sm:pt-20 pb-6 sm:pb-10 px-3 sm:px-4">
             <div className="container mx-auto max-w-2xl">
               <Configuration />
             </div>
@@ -30,7 +30,7 @@ const Index = () => {
         );
       case 'chat':
         return (
-          <div className="min-h-screen pt-20 pb-10 px-4">
+          <div className="min-h-screen pt-16 sm:pt-20 pb-6 sm:pb-10 px-3 sm:px-4">
             <div className="container mx-auto max-w-4xl">
               <ChatInterface />
             </div>

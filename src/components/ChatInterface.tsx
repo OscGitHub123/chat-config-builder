@@ -89,57 +89,58 @@ const ChatInterface = () => {
   };
 
   return (
-    <Card className="bg-gradient-card shadow-elegant border-0 h-[600px] flex flex-col">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-          <Bot className="h-6 w-6 text-primary" />
-          RAG Chat Assistant
+    <Card className="bg-gradient-card shadow-elegant border-0 h-[500px] sm:h-[600px] lg:h-[700px] flex flex-col">
+      <CardHeader className="pb-3 sm:pb-4 px-3 sm:px-6">
+        <CardTitle className="text-lg sm:text-xl lg:text-2xl font-bold text-center flex items-center justify-center gap-2">
+          <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+          <span className="hidden sm:inline">RAG Chat Assistant</span>
+          <span className="sm:hidden">RAG Chat</span>
         </CardTitle>
-        <p className="text-muted-foreground text-center text-sm">
+        <p className="text-muted-foreground text-center text-xs sm:text-sm">
           Tanya apapun tentang dokumen yang sudah Anda upload
         </p>
       </CardHeader>
       
-      <CardContent className="flex-1 flex flex-col p-4 space-y-4">
+      <CardContent className="flex-1 flex flex-col p-3 sm:p-4 space-y-3 sm:space-y-4">
         {/* Messages Area */}
-        <ScrollArea ref={scrollAreaRef} className="flex-1 pr-4">
-          <div className="space-y-4">
+        <ScrollArea ref={scrollAreaRef} className="flex-1 pr-2 sm:pr-4">
+          <div className="space-y-3 sm:space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
+                  className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-2 sm:p-3 ${
                     message.type === 'user'
-                      ? 'bg-primary text-primary-foreground ml-4'
-                      : 'bg-muted mr-4'
+                      ? 'bg-primary text-primary-foreground ml-2 sm:ml-4'
+                      : 'bg-muted mr-2 sm:mr-4'
                   }`}
                 >
-                  <div className="flex items-start gap-2 mb-2">
+                  <div className="flex items-start gap-2 mb-1 sm:mb-2">
                     {message.type === 'user' ? (
-                      <User className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                      <User className="h-3 w-3 sm:h-4 sm:w-4 mt-0.5 flex-shrink-0" />
                     ) : (
-                      <Bot className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
+                      <Bot className="h-3 w-3 sm:h-4 sm:w-4 mt-0.5 flex-shrink-0 text-primary" />
                     )}
-                    <div className="flex-1">
-                      <p className="text-sm leading-relaxed">{message.content}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs sm:text-sm leading-relaxed break-words">{message.content}</p>
                       {message.sources && (
-                        <div className="mt-2 flex flex-wrap gap-1">
+                        <div className="mt-1 sm:mt-2 flex flex-wrap gap-1">
                           {message.sources.map((source, index) => (
                             <span
                               key={index}
-                              className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-accent rounded text-accent-foreground"
+                              className="inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs bg-accent rounded text-accent-foreground"
                             >
-                              <FileText className="h-3 w-3" />
-                              {source}
+                              <FileText className="h-2 w-2 sm:h-3 sm:w-3" />
+                              <span className="truncate max-w-[80px] sm:max-w-none">{source}</span>
                             </span>
                           ))}
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className="text-xs opacity-70">
+                  <div className="text-[10px] sm:text-xs opacity-70">
                     {message.timestamp.toLocaleTimeString('id-ID', { 
                       hour: '2-digit', 
                       minute: '2-digit' 
@@ -151,13 +152,13 @@ const ChatInterface = () => {
             
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-muted rounded-lg p-3 mr-4">
+                <div className="bg-muted rounded-lg p-2 sm:p-3 mr-2 sm:mr-4">
                   <div className="flex items-center gap-2">
-                    <Bot className="h-4 w-4 text-primary" />
+                    <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-100"></div>
-                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-200"></div>
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full animate-bounce delay-100"></div>
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full animate-bounce delay-200"></div>
                     </div>
                   </div>
                 </div>
@@ -167,22 +168,22 @@ const ChatInterface = () => {
         </ScrollArea>
 
         {/* Input Area */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-end">
           <Input
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Tanya sesuatu tentang dokumen Anda..."
             disabled={isLoading}
-            className="flex-1"
+            className="flex-1 text-sm"
           />
           <Button 
             onClick={handleSendMessage}
             disabled={isLoading || !inputValue.trim()}
             size="icon"
-            className="bg-gradient-primary hover:opacity-90 transition-smooth"
+            className="bg-gradient-primary hover:opacity-90 transition-smooth h-9 w-9 sm:h-10 sm:w-10 flex-shrink-0"
           >
-            <Send className="h-4 w-4" />
+            <Send className="h-3 w-3 sm:h-4 sm:w-4" />
           </Button>
         </div>
       </CardContent>

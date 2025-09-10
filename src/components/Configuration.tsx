@@ -132,9 +132,9 @@ const Configuration = () => {
 
         {/* Model Info */}
         {selectedModel && (
-          <div className="p-4 bg-accent rounded-lg border border-border">
-            <h4 className="font-semibold mb-2">Informasi Model:</h4>
-            <div className="text-sm text-muted-foreground space-y-1">
+          <div className="p-3 sm:p-4 bg-accent rounded-lg border border-border">
+            <h4 className="font-semibold mb-2 text-sm sm:text-base">Informasi Model:</h4>
+            <div className="text-xs sm:text-sm text-muted-foreground space-y-1">
               {selectedModel === "gemini-pro" && (
                 <p>✨ Model terbaru dengan kemampuan reasoning yang sangat baik</p>
               )}
